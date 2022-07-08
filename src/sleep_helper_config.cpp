@@ -37,17 +37,6 @@ void sleepHelperConfig() {
             }
             return false;
         })
-        .withSleepConfigurationFunction([](SystemSleepConfiguration &sleepConfig, SleepHelper::SleepConfigurationParameters &params) {
-            // Add a GPIO wake on button press
-            sleepConfig.gpio(BUTTON_PIN, CHANGE);   // My debounce time constant prevents detecting FALLING
-            delay(2000);                            // This is a debugging line - to connect to USB serial for logging
-            Log.info("Woke on button press");
-            if (!digitalRead(BUTTON_PIN)) {         // The BUTTON is active low - this is a button press
-                sysStatus.enableSleep = false;      // Pressing the button diables sleep - at least that is the intent
-                Log.info("Button press - sleep enable is %s", (sysStatus.enableSleep) ? "true" : "false");
-            }
-            return true;
-        })
         .withSleepReadyFunction([](SleepHelper::AppCallbackState &, system_tick_t) {
             if (sysStatus.enableSleep) return false;// Boolean set by Particle.function - If sleep is enabled return false
             else return true;                       // If we need to delay sleep, return true

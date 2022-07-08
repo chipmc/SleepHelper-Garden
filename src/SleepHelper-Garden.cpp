@@ -46,9 +46,8 @@ void setup() {
 
     particleInitialize();                           // Sets up all the Particle functions and variables defined in particle_fn.h
 
-
     {                                               // Initialize AB1805 Watchdog and RTC                                 
-        ab1805.setup();
+        ab1805.withFOUT(D8).setup();                // The carrier board has D8 connected to FOUT for wake interrupts
 
         ab1805.resetConfig();                       // Reset the AB1805 configuration to default values
 

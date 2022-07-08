@@ -218,9 +218,9 @@ void makeUpStringMessages() {
   }
 
   // Watering Strings
-  snprintf(wateringDurationStr,sizeof(wateringDurationStr),"%isec",sysStatus.wateringDuration);
-  snprintf(wateringThresholdPctStr,sizeof(wateringThresholdPctStr),"%2.1f %%",sysStatus.wateringThresholdPct);
-  snprintf(heatThresholdStr,sizeof(heatThresholdStr),"%2.1f %%",sysStatus.heatThreshold);
+  snprintf(wateringDurationStr,sizeof(wateringDurationStr),"%is",sysStatus.wateringDuration);
+  snprintf(wateringThresholdPctStr,sizeof(wateringThresholdPctStr),"%2.1f%%",sysStatus.wateringThresholdPct);
+  snprintf(heatThresholdStr,sizeof(heatThresholdStr),"%2.1fC",sysStatus.heatThreshold);
 
   return;
 }

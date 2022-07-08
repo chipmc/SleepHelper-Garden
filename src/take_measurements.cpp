@@ -40,9 +40,15 @@ bool takeMeasurements() {
 
     digitalWrite(SOIL_POWER_PIN, LOW);              // Analog measurements complete power down the soil sensor
 
-    if (current.soilMoisture < sysStatus.wateringThresholdPct) current.wateringState = 1;         // If the soil is too dry, water
-    else if (current.soilTempC > 38) current.wateringState = 1;                                   // If the soil it too hot, water           
-    else current.wateringState = 0;                                                               // Else, don't
+    if (current.soilMoisture < sysStatus.wateringThresholdPct) {
+      current.wateringState = 1;                    // If the soil is too dry, water
+      Log.info("Too dry - watering");
+    }
+    else if (current.soilTempC > sysStatus.heatThreshold) {
+      current.wateringState = 1;                    // If the soil it too hot, water   
+      Log.info("Too hot - watering");
+    }        
+    else current.wateringState = 0;                 // Else, don't
 
     batteryState();
 
