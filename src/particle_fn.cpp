@@ -34,11 +34,13 @@ void particleInitialize() {
   Particle.variable("Heat Threshold",heatThresholdStr);
 
   Particle.function("Enable Sleep", setEnableSleep);
-  Particle.function("Set Wake Time", setWakeTime);
-  Particle.function("Set Sleep Time", setSleepTime);
+  // Particle.function("Set Wake Time", setWakeTime);
+  // Particle.function("Set Sleep Time", setSleepTime);
   Particle.function("Set Water Threshold",setWaterThreshold);
-  Particle.function("Set Temp Threshold",setHeatThreshold);
+  Particle.function("Set Heat Threshold",setHeatThreshold);
   Particle.function("Set Water Duration",setWaterDuration);
+
+  if (!digitalRead(BUTTON_PIN)) sysStatus.enableSleep = false;     // If the user button is held down while resetting - diable sleep
 
   takeMeasurements();                               // Initialize sensor values
 
