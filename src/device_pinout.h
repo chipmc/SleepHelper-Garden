@@ -21,5 +21,6 @@ extern const pin_t BLUE_LED;
 extern const pin_t WAKEUP_PIN;   
 
 bool initializePinModes();
+bool initializePowerCfg();
 
 #endif

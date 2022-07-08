@@ -6,12 +6,6 @@
  * @link https://github.com/rickkas7/SleepHelper/ @endlink - Project Repository
  * @date 5 July 2022
  * 
- * To keep the main application manageable, I have broken out configuration into focused files
- * 1) device_pinout - Pin definitions and connections for your device
- * 2) storage_object - Define what variables are needed to capture the sustem and current status
- * 3) take_measurements - This is the set of activities executed each time the device wakes
- * 4) sleep_helper_config - Define the sleep / wake / report cycle - the full behaviour of your device
- * 5) particle_fn - For any particle variables / functions that you want to expose in the console
  */
 
 // Include needed Particle / Community libraries
@@ -40,15 +34,18 @@ MB85RC64 fram(Wire, 0);                             // Rickkas' FRAM library
 // Support for Particle Products (changes coming in 4.x - https://docs.particle.io/cards/firmware/macros/product_id/)
 PRODUCT_ID(PLATFORM_ID);                            // Device needs to be added to product ahead of time.  Remove once we go to deviceOS@4.x
 PRODUCT_VERSION(0);
-char currentPointRelease[6] ="0.02";
+char currentPointRelease[6] ="0.03";
 
 void setup() {
 
     initializePinModes();                           // Sets the pinModes
 
+    initializePowerCfg();                           // Sets the power configuration for solar
+
     storageObjectStart();                           // Sets up the storage for system and current status in storage_objects.h
 
     particleInitialize();                           // Sets up all the Particle functions and variables defined in particle_fn.h
+
 
     {                                               // Initialize AB1805 Watchdog and RTC                                 
         ab1805.setup();
