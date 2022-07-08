@@ -27,8 +27,9 @@ struct systemStatus_structure {                     // Where we store the config
   bool enableSleep;                                 // Low Power Mode will disconnect from the Cellular network to save power
   uint8_t wakeTime;                                 // Hour to start operations (0-23)
   uint8_t sleepTime;                                // Hour to go to sleep for the night (0-23)
-  float wateringThresholdPct;                         // Percentage below witch we will initate watering
+  float wateringThresholdPct;                       // Percentage below witch we will initate watering
   int wateringDuration;                             // When we water, how many minutes?
+  float heatThreshold;                              // When is the soil temp too high?
 
 };
 extern struct systemStatus_structure sysStatus;

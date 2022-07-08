@@ -40,7 +40,7 @@ MB85RC64 fram(Wire, 0);                             // Rickkas' FRAM library
 // Support for Particle Products (changes coming in 4.x - https://docs.particle.io/cards/firmware/macros/product_id/)
 PRODUCT_ID(PLATFORM_ID);                            // Device needs to be added to product ahead of time.  Remove once we go to deviceOS@4.x
 PRODUCT_VERSION(0);
-char currentPointRelease[6] ="0.01";
+char currentPointRelease[6] ="0.02";
 
 void setup() {
 

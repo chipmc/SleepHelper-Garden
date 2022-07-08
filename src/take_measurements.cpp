@@ -21,7 +21,7 @@ char signalStr[64] = " ";
 bool takeMeasurements() { 
 
     digitalWrite(SOIL_POWER_PIN, HIGH);             // Power up the soil sensor
-    delay(2);
+    delay(100);                                     // Recommendation from Jay Ham at CSU - have not tested to see if it can be shorter
 
     // Temperature inside the enclosure
     current.internalTempC = tmp36TemperatureC(analogRead(TMP36_SENSE_PIN));

@@ -18,6 +18,7 @@
 // Variables
 extern char currentPointRelease[6];
 extern char wateringThresholdPctStr[8];
+extern char heatThreshold[8];
 extern char wateringDurationStr[16];
 extern char wakeTimeStr[8];
 extern char sleepTimeStr[8];
@@ -28,6 +29,7 @@ int setSleepTime(String command);
 int setEnableSleep(String command);
 int setWaterDuration(String command);
 int setWaterThreshold(String command);
+int setHeatThreshold(String command);
 void makeUpStringMessages();
 
 #endif

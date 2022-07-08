@@ -68,7 +68,8 @@ bool storageObjectLoop() {                          // Monitors the values of th
                       std::hash<byte>{}(sysStatus.wakeTime) + \
                       std::hash<byte>{}(sysStatus.sleepTime) + \
                       std::hash<double>{}(sysStatus.wateringThresholdPct) + \
-                      std::hash<int>{}(sysStatus.wateringDuration);
+                      std::hash<int>{}(sysStatus.wateringDuration) + \
+                      std::hash<double>{}(sysStatus.heatThreshold);
     if (sysStatusHash != lastSysStatusHash) {       // If hashes don't match write to FRAM
       Log.info("sysStaus object stored and hash updated");
       fram.put(FRAM::systemStatusAddr,sysStatus);
@@ -111,4 +112,5 @@ void loadSystemDefaults() {                         // This code is only execute
   sysStatus.sleepTime = 22;
   sysStatus.wateringDuration = 0;
   sysStatus.wateringThresholdPct = 0;
+  sysStatus.heatThreshold = 100;
 }

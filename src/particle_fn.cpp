@@ -4,6 +4,7 @@
 
 char wateringThresholdPctStr[8] = " ";
 char wateringDurationStr[16] = " ";
+char heatThresholdStr[8] = " ";
 char wakeTimeStr[8] = " ";
 char sleepTimeStr[8] = " ";
 
@@ -30,12 +31,14 @@ void particleInitialize() {
   Particle.variable("Soil Temp", soilTempStr);
   Particle.variable("WateringPct",wateringThresholdPctStr);
   Particle.variable("WateringDuration",wateringDurationStr);
+  Particle.variable("Heat Threshold",heatThresholdStr);
 
   Particle.function("Enable Sleep", setEnableSleep);
   Particle.function("Set Wake Time", setWakeTime);
   Particle.function("Set Sleep Time", setSleepTime);
-  Particle.function("SetWaterThreshold",setWaterThreshold);
-  Particle.function("SetWaterDuration",setWaterDuration);
+  Particle.function("Set Water Threshold",setWaterThreshold);
+  Particle.function("Set Temp Threshold",setHeatThreshold);
+  Particle.function("Set Water Duration",setWaterDuration);
 
   takeMeasurements();                               // Initialize sensor values
 
@@ -129,9 +132,7 @@ int setEnableSleep(String command)                                   // This is 
  * 
  * @details Input the watering threshold in percent from 0 (bone dry) to 100 (soaking)
  *
- * @param command A string indicating whether to set the device into low power mode or into normal mode.
- * A "1" indicates low power mode, a "0" indicates normal mode. Inputs that are neither of these commands
- * will cause the function to return 0 to indicate an invalid entry.
+ * @param command A string indicating what soil moisture precentage would be the minimum before watering is initiated.  A value of 0 disables watering
  * 
  * @return 1 if able to successfully take action, 0 if invalid command
  */
@@ -146,6 +147,30 @@ int setWaterThreshold(String command)                                  // This i
   if (Particle.connected()) {                                         // Publish result if feeling verbose
     if (sysStatus.wateringThresholdPct == 0) Particle.publish("System","Watering function disabled",PRIVATE);
     else Particle.publish("Threshold",wateringThresholdPctStr, PRIVATE);
+  }
+  return 1;                                                            // Returns 1 to let the user know if was reset
+}
+
+/**
+ * @brief Let's you set the temperature threashold for watering in degrees C
+ * 
+ * @details Input the watering threshold in percent from 0 (freezing) to 100 (boiling)
+ *
+ * @param command A string indicating the temperature in C above which we will water to keep cool.  A value of 100 disables temp watering.
+ * 
+ * @return 1 if able to successfully take action, 0 if invalid command
+ */
+int setHeatThreshold(String command)                                  // This is the amount of time in seconds we will wait before starting a new session
+{
+  char * pEND;
+  float tempThreshold = strtof(command,&pEND);                         // Looks for the first float and interprets it
+  if ((tempThreshold < 0.0) | (tempThreshold > 100.0)) return 0;       // Make sure it falls in a valid range or send a "fail" result
+  sysStatus.heatThreshold = tempThreshold;                      // debounce is how long we must space events to prevent overcounting
+  makeUpStringMessages();
+
+  if (Particle.connected()) {                                         // Publish result if feeling verbose
+    if (sysStatus.heatThreshold == 100) Particle.publish("System","Heat watering function disabled",PRIVATE);
+    else Particle.publish("Heat",wateringThresholdPctStr, PRIVATE);
   }
   return 1;                                                            // Returns 1 to let the user know if was reset
 }
@@ -193,6 +218,7 @@ void makeUpStringMessages() {
   // Watering Strings
   snprintf(wateringDurationStr,sizeof(wateringDurationStr),"%isec",sysStatus.wateringDuration);
   snprintf(wateringThresholdPctStr,sizeof(wateringThresholdPctStr),"%2.1f %%",sysStatus.wateringThresholdPct);
+  snprintf(heatThresholdStr,sizeof(heatThresholdStr),"%2.1f %%",sysStatus.heatThreshold);
 
   return;
 }
