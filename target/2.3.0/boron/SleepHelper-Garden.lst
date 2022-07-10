@@ -829,7 +829,7 @@ public:
    d4472:	2001      	movne	r0, #1
    d4474:	b010      	add	sp, #64	; 0x40
    d4476:	bd10      	pop	{r4, pc}
-   d4478:	01540154 	.word	0x01540154
+   d4478:	03840384 	.word	0x03840384
 
 000d447c <_ZN10CloudClass9_variableI17CloudVariableTypeIPKcvEEEbS3_NT_11PointerTypeERKS5_.isra.0>:
         return _variable(varKey, (const char*)userVar, userVarType);

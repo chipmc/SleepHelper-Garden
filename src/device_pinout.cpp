@@ -60,7 +60,7 @@ bool initializePinModes() {
 }
 
 bool initializePowerCfg() {
-    const int maxCurrentFromPanel = 340;                                // Set for implmentation (550mA for 3.5W Panel, 340 for 2W panel)
+    const int maxCurrentFromPanel = 900;            // Not currently used (100,150,500,900,1200,2000 - will pick closest) (550mA for 3.5W Panel, 340 for 2W panel)
     SystemPowerConfiguration conf;
     System.setPowerConfiguration(SystemPowerConfiguration());  // To restore the default configuration
 
